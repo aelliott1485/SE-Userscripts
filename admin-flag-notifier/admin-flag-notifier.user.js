@@ -2,7 +2,7 @@
 // @name        Admin Flag Notifier
 // @namespace   https://github.com/Glorfindel83/
 // @description Refreshes the flag dashboard automatically and sends desktop notifications when there are new flags.
-// @author      Glorfindel
+// @author      Glorfindel & 
 // @updateURL   https://raw.githubusercontent.com/Glorfindel83/SE-Userscripts/master/admin-flag-notifier/admin-flag-notifier.user.js
 // @downloadURL https://raw.githubusercontent.com/Glorfindel83/SE-Userscripts/master/admin-flag-notifier/admin-flag-notifier.user.js
 // @version     0.3
@@ -26,23 +26,71 @@
   if (Notification.permission !== "granted") {
     Notification.requestPermission();
   }
+  //change to false to auto-hide time filters
+  const LIMIT_NOTIFICAITON_HOURS = false;
 
   // Determine site name
-  var host = window.location.host;
-  var sitename = host.split(".")[0];
+  const host = window.location.host;
+  const [sitename] = host.split(".");
 
   // Determine current amount of flags
   var currentTitle = $("title").text();
   var currentFlags = parseInt(currentTitle);
-  console.log("Current: " + currentFlags);
-
+  let notified = false;
+  const table = $('div[data-can-be="flag-table-of-contents"]');
+  const notification = $('<div></div>')
+  notification.html('starting timer')
+  table.before(notification);
+  const limitNotificationCheckbox = $(`<input/>`)
+      .attr({id: 'limitByTime', type: 'checkbox'});
+  LIMIT_NOTIFICAITON_HOURS && limitNotificationCheckbox.attr('checked', 1);
+  const limitContainer = $('<div></div>');
+  const label = $('<label for="limitByTime">Limit sending notifications</label>');
+  table.before([limitNotificationCheckbox, label, limitContainer.toggle(LIMIT_NOTIFICAITON_HOURS)])
+  limitNotificationCheckbox.click(_ => limitContainer.toggle(limitNotificationCheckbox.prop('checked')));
+  limitContainer.append($('<div>send notifications between:</div>'));
+  limitContainer.append($('<input type="time" id="minTime" value="07:00" />'));
+  limitContainer.append($('<input type="time" id="maxTime" value="22:00" />'));
+  const notify = async flags => {
+    const URL = 'https://api.emailjs.com/api/v1.0/email/send';
+    const data = {
+      service_id: '', //'gmail',
+      template_id: '',
+      user_id: '',
+      template_params: {
+        message_html: location.href + ' flags: ' + flags,
+        message_subject: location.pathname.split('/')[2]
+      }
+    };
+    console.log('sending data to ' + URL, data);
+    const response = await $.post({
+      url: URL,
+      data: JSON.stringify(data),
+      contentType: 'application/json'
+    }).catch(error => notification.text(error.message));
+    console.log('response from email send: ', response);
+  };
   setInterval(function () {
     let checkbox = document.getElementById("chk-apply-filters");
     if (checkbox == null) {
       checkbox = document.getElementsByClassName("js-toggle-apply-filters")[0];
     }
-    var url = 'https://' + host + '/admin/dashboard?filtered=' + !checkbox.checked;
-    console.log("Calling: " + url);
+    var url = `https://${host}/admin/dashboard`;//?filtered=' + !checkbox.checked;
+    const date = new Date();
+    notification.html(` ${date.toLocaleTimeString()} Calling: ${url}`);
+    function shouldSendNotification() {
+      if (notified) {
+        return false;
+      }
+      if (limitNotificationCheckbox.is(':checked')) {
+        const minTime = new Date()
+        minTime.setHours(...$('#minTime').val().split(':'));
+        const maxTime = new Date();
+        maxTime.setHours(...$('#maxTime').val().split(':'));
+        return date.getTime() >= minTime.getTime() && date.getTime() <= maxTime.getTime();
+      }
+      return true;
+    }
     $.get(url, function (data) {
       var updatedTitle = $("<html/>").html(data).find("title").text();
       var updatedFlags = parseInt(updatedTitle);
@@ -55,6 +103,11 @@
         window.location.reload();
       } else if (updatedFlags > currentFlags) {
         console.log("More flags.");
+        if (shouldSendNotification()) {
+          notify(currentFlags);
+          notified = true;
+        }
+
         // new flags, create a notification. Remember the current number, so that we don't send a notification twice for the same flag
         currentFlags = updatedFlags;
         if (Notification.permission === "granted") {
