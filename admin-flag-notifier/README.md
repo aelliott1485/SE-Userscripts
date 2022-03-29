@@ -10,6 +10,7 @@ bother you anymore.
 - It checks the current status of the queue every 60 seconds.
 - Due to the expected number of flags, Stack Overflow moderators are advised not to use
 the script. It may harm your sanity.
+- Ability to send notifications to email using [emailJS](https://email.js.com)
 
 ## Installation
 
@@ -39,3 +40,19 @@ permission for notifications, so click Allow:
   ![](install2b.png)
 
   Click on the body of the notification, it will focus on the tab with the flag queue and refresh the page.
+
+### Configuring email notifications
+Configure lines 32-34:
+
+    //emailJS configuration values
+    const service_id = 'service_********';
+    const template_id = 'template_********';
+    const user_id = 'user_********';
+
+- Signup on [emailJS](https://dashboard.emailjs.com/sign-up). Then copy the user ID from the 
+[integration page](https://dashboard.emailjs.com/admin/integration) into the value for `user_id`.
+- on the EmailJS dashboard create an Email service with the button labeled "_Add New Service_". 
+  Then copy the Service ID and paste it into the value for `service_id`. 
+- Create an [email template](https://dashboard.emailjs.com/admin/templates). Then copy the Template ID from the 
+  and paste it into the value for `template_id`. 
+- Optional: change `LIMIT_NOTIFICAITON_HOURS` on line 30 to `true` to always limit the hours notifications will be sent. 
