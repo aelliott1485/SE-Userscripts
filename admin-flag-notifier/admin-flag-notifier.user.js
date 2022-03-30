@@ -97,7 +97,7 @@
       }
       return true;
     }
-    $.get(url, async function (data) {
+    $.get(url, function (data) {
       const updatedTitle = $("<html/>").html(data).find("title").text();
       const updatedFlags = parseInt(updatedTitle);
       console.log("Update: " + updatedFlags);
@@ -110,7 +110,7 @@
       } else if (updatedFlags > currentFlags) {
         console.log("More flags.");
         if (shouldSendNotification()) {
-          await sendMailNotification(currentFlags);
+          sendMailNotification(currentFlags);
         }
 
         // new flags, create a notification. Remember the current number, so that we don't send a notification twice for the same flag
