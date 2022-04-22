@@ -1,4 +1,4 @@
-# Review Detlas
+# Review Deltas
 
 This script adds a Time delta column to the history view of a review queue, as well as a button to load rows from the next 19 pages. 
 
