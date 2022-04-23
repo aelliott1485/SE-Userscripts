@@ -8,7 +8,6 @@
 // @downloadURL  https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
 // @match        https://*.stackexchange.com/review/*/history*
 // @match        https://stackoverflow.com/review/*/history*
-// @icon         https://www.google.com/s2/favicons?domain=stackexchange.com
 // @grant        none
 // ==/UserScript==
 
