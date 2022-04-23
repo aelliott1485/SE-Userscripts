@@ -1,14 +1,14 @@
 // ==UserScript==
-// @name         Review Deltas
-// @namespace    http://tampermonkey.net/
-// @version      0.2
-// @description  Add Deltas to reviews for users
-// @author       aelliott1485
-// @updateURL    https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
-// @downloadURL  https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
-// @match        https://*.stackexchange.com/review/*/history*
-// @match        https://stackoverflow.com/review/*/history*
-// @grant        none
+// @name        Review Deltas
+// @namespace   https://github.com/aelliott1485
+// @description Add Deltas to reviews for usersm
+// @author      aelliott1485
+// @updateURL   https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
+// @downloadURL https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
+// @version     1.0
+// @match       https://*.stackexchange.com/review/*/history*
+// @match       https://stackoverflow.com/review/*/history*
+// @grant       none
 // ==/UserScript==
 
     (function($) {
