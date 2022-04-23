@@ -4,7 +4,10 @@
     // @version      0.2
     // @description  Add Deltas to reviews for users
     // @author       aelliott1485
-    // @match        https://codereview.stackexchange.com/review/*/history*
+    // @updateURL   https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
+    // @downloadURL https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
+    // @match        https://*.stackexchange.com/review/*/history*
+    // @match        https://stackoverflow.com/review/*/history*
     // @icon         https://www.google.com/s2/favicons?domain=stackexchange.com
     // @grant        none
     // ==/UserScript==
