@@ -3,8 +3,8 @@
 // @namespace   https://github.com/aelliott1485
 // @description Add Deltas to reviews for usersm
 // @author      aelliott1485
-// @updateURL   https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
-// @downloadURL https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.js
+// @updateURL   https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.user.js
+// @downloadURL https://raw.githubusercontent.com/aelliott1485/SE-Userscripts/add-review-deltas-script/review-deltas/review-deltas.user.js
 // @version     1.0
 // @match       https://*.stackexchange.com/review/*/history*
 // @match       https://stackoverflow.com/review/*/history*
